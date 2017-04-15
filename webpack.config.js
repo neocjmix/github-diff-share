@@ -14,9 +14,11 @@ module.exports = {
     })],
     resolve: {
         alias : {
+             app: path.resolve(__dirname, ' app'),
              resources: path.resolve(__dirname, 'resources'),
-             app: path.resolve(__dirname, 'app')
-        }
+             libraries: path.resolve(__dirname, 'libraries')
+        },
+        extensions: [".js", ".json"]
     },
     devtool: 'source-map',
     module: {
