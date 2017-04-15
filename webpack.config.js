@@ -10,12 +10,12 @@ module.exports = {
         filename: 'bundle.js'
     },
     plugins: [new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, './resources/index.html')
+        template: path.resolve(__dirname, 'resources/index.html')
     })],
     resolve: {
         alias : {
-             resources: path.resolve(__dirname, './resources'),
-             app: path.resolve(__dirname, './app')
+             resources: path.resolve(__dirname, 'resources'),
+             app: path.resolve(__dirname, 'app')
         }
     },
     devtool: 'source-map',
