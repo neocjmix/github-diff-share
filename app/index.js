@@ -1,6 +1,6 @@
 import "babel-polyfill";
-import "./style.less";
-import "./index.html";
-import Reactor from "./reactor/index";
-import List from "./components/list";
-import Record from "./components/record";
+import "../resources/style.less";
+import "../resources/index.html";
+import props from "../resources/props.json";
+
+document.write('<h1>Hello, ' + props.userName + '!</h1>');
