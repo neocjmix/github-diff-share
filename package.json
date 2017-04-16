@@ -7,6 +7,7 @@
     "development": "NODE_ENV=development concurrent \"npm run client\" \"npm run server\""
   },
   "devDependencies": {
-    "concurrently": "^1.0.0"
+    "concurrently": "^1.0.0",
+    "nodemon": "^1.11.0"
   }
 }

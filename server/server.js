@@ -1,9 +1,5 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
-var config = require('./config');
 var express = require('express');
 var http = require('http');
 var path = require('path');
@@ -11,36 +7,39 @@ var logger = require('morgan');
 var debug = require('debug')('server:server');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+var config = require('./config');
+var index = require('./app/index');
+var frank = require('./app/frank');
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+  if (isNaN(port)) return val;
+  if (port >= 0) return port;
+  return false;
+}
+
+var port = normalizePort(process.env.PORT || config.serverPort);
 var app = express();
-
-var port = normalizePort(process.env.PORT || config.serverPort)
-
-/*
-// uncomment if use
-// var favicon = require('serve-favicon');
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-*/
-
 app.set('port', port);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+/*
+// uncomment if use
+// var favicon = require('serve-favicon');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+*/
+
 // routing
 app.use(config.serverRoot, express.Router()
-  .get('/', function (req, res, next) {
-    res.send('server works!');
-  })
-  .get('/frank', function (req, res, next) {
-    res.send({
-      email : "neocjmix@gmail.com",
-      status : "I'm making my own boilerplate."
-    });
-  }));
+  .get('/', index)
+  .get('/frank', frank));
 
 // error handlers
 app.use(function(req, res, next) {
@@ -56,9 +55,7 @@ app.use(function(err, req, res, next) {
   res.send('error');
 });
 
-
 var server = http.createServer(app);
-server.listen(port);
 
 server.on('listening', function() {
   var addr = server.address();
@@ -89,10 +86,4 @@ server.on('error', function(error) {
   }
 });
 
-
-function normalizePort(val) {
-  var port = parseInt(val, 10);
-  if (isNaN(port)) return val;
-  if (port >= 0) return port;
-  return false;
-}
+server.listen(port);

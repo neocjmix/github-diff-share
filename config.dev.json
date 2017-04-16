@@ -1,0 +1,5 @@
+{
+    "serverRoot" : "/server",
+    "serverPort" : 3000,
+    "devServerReload" : "./.server_rev"
+}

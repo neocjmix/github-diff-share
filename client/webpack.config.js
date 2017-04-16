@@ -1,12 +1,16 @@
 var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var configPath = (process.env.NODE_ENV === 'production') ? '../config' : '../config.dev'
-var config = require(configPath);
+var fs = require('fs');
+var configPath = (process.env.NODE_ENV === 'production') 
+    ? path.resolve(__dirname,'../config')
+    : path.resolve(__dirname,'../config.dev');
 
-module.exports = {
-    entry: {
-        app: ['babel-polyfill', path.resolve(__dirname, 'app/index.js')]
-    },
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var config = require(configPath);
+var webpackConfig = {
+    entry:[
+        'babel-polyfill', 
+        path.resolve(__dirname, 'app/index.js')
+    ],
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js'
@@ -19,7 +23,7 @@ module.exports = {
             app: path.resolve(__dirname, ' app'),
             resources: path.resolve(__dirname, 'resources'),
             libraries: path.resolve(__dirname, 'libraries'),
-            config: path.resolve(__dirname, configPath)
+            config:  configPath
         },
         extensions: [".js", ".json"]
     },
@@ -56,3 +60,11 @@ module.exports = {
         ]
     }
 };
+
+if(config.devServerReload){
+    var devServerReload = path.resolve('..',config.devServerReload);
+    fs.closeSync(fs.openSync(devServerReload, 'a'));
+    webpackConfig.entry.push(devServerReload);
+}
+
+module.exports = webpackConfig;

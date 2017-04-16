@@ -2,8 +2,8 @@
   "name": "express-boilerplate",
   "version": "1.0.0",
   "scripts": {
-    "start": "NODE_ENV=production node ./index.js",
-    "development": "NODE_ENV=development node ./index.js"
+    "start": "NODE_ENV=production node ./server.js",
+    "development": "NODE_ENV=development nodemon ./server.js"
   },
   "dependencies": {
     "body-parser": "~1.17.1",
