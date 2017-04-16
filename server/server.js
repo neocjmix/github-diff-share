@@ -9,8 +9,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var config = require('./config');
-var index = require('./app/index');
-var frank = require('./app/frank');
+var mainController = require('./controller/main-controller');
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
@@ -36,10 +35,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 */
 
-// routing
-app.use(config.serverRoot, express.Router()
-  .get('/', index)
-  .get('/frank', frank));
+app.use(config.serverRoot, mainController);
 
 // error handlers
 app.use(function(req, res, next) {

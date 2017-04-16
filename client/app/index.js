@@ -1,3 +1,5 @@
+'use strict';
+
 import 'babel-polyfill';
 import 'resources/style.less';
 import 'resources/index.html';
@@ -9,22 +11,46 @@ const eUrlInput = document.getElementById('url');
 const eContentDiv = document.getElementById('content');
 const handleUrlChange = withDelay(500);
 
-function changeUrl(e){
-    handleUrlChange(()=>{
-        eContentDiv.innerHTML = e.target.value
-    });
+function isValidGithubCommitDiffUrl(url){
+    return !!url.match(/^https:\/\/github.com\/.+\/commit\/.+.diff$/);
 }
 
-eUrlInput.addEventListener('keypress', changeUrl);
-eUrlInput.addEventListener('paste', changeUrl);
+function setInputValidity(eInput, isValid){
+    if(isValid){
+        eInput.className = eInput.className.replace(/ (in)?valid( |$)/, "");
+        eInput.className += " valid";
+        return true;
+    }
 
+    if(eInput.value.length === 0){
+        eInput.className = eInput.className.replace(/ (in)?valid( |$)/, "");
+        return false;
+    }
+    
+    eInput.className = eInput.className.replace(/ (in)?valid( |$)/, "");
+    eInput.className += " invalid";
+    return false;
+}
 
-document.writeln('<h1>' + props.userName + '</h1>');
+function changeUrl(e){
+    const url = e.target.value.replace(/(.diff)?$/, ".diff");
+    if(!setInputValidity(e.target, isValidGithubCommitDiffUrl(url))) return;
+    
+    handleUrlChange(() => 
+        loadPageViaProxyServer(url, config.serverRoot+"/load")
+            .then(html=>eContentDiv.innerHTML=html)
+            .catch(err=>console.log(err)));
+}
 
-fetch(config.serverRoot+"/"+props.userName)
-    .then(res=>res.json())
-    .then(user=>'' +
-        '<a href="mailto:' + user.email + '">' + user.email + '</a><br>' +
-        '<p>' + user.status+ '</p>'
-    )
-    .then(html=>document.body.innerHTML+=html);
+function loadPageViaProxyServer(url, proxyUrl){
+    return fetch(proxyUrl + '?url=' + url)
+        .then(response=>{
+            if (!response.ok) {
+               throw Error(response.statusText);
+            }
+            return response.text()
+        })
+}
+
+eUrlInput.addEventListener('input', changeUrl);
+// eUrlInput.addEventListener('paste', changeUrl);
