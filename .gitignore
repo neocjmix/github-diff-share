@@ -1,6 +1,7 @@
 .tmp
 .idea
 .vscode
+.server_rev
 *.iml
 *.log
 build

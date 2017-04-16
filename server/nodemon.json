@@ -1,0 +1,5 @@
+{
+  "events": {
+    "restart": "echo $(date +%s) > ../.server_rev"
+  }
+}
