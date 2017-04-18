@@ -1,5 +1,12 @@
+ul{
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+
+
 body{
-    h1{
+    >h1{
         color: darkorange
     }
 
@@ -32,6 +39,50 @@ body{
         }
         &:focus{
             box-shadow: 0 0 25px -13px inset;
+        }
+    }
+
+    #content{
+        article{
+            background:#f4f4f4;
+            margin:2em 0;
+            border-radius:10px;
+            border:solid 1px #eee;
+            overflow: hidden;
+            
+            header{
+                padding:1em 1em .5em;
+                background:#fafafa;
+                h1{
+                    font-size: 1em;
+                    margin:0;
+                }
+            }
+            .content{
+                padding:1em;
+                ul{
+                    li{
+                        code{
+                            display:block;
+                            padding:.5em;
+                            background: white;
+                            white-space: pre;
+                            span{
+                                display:block;
+                                &.normal{
+
+                                }
+                                &.add{
+                                    background: #dfd
+                                }
+                                &.del{
+                                    background: #fdd
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
