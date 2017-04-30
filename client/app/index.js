@@ -47,8 +47,9 @@ function changeUrl(inputElement){
     const url = inputElement.value.replace(/(.diff)?$/, ".diff");
     if(!setInputValidity(inputElement, isValidGithubCommitDiffUrl(url))) return;
     
-    twicePerSecond(() =>
-        loadPageViaProxyServer(url, config.serverRoot+"/load")
+    twicePerSecond(() => {
+        history.replaceState({},"","?url="+url);
+        loadPageViaProxyServer(url, config.serverRoot + "/load")
             .then(parse)
             .then(files => mapLines(files, (change, index) =>
                 Object.assign(change, {
