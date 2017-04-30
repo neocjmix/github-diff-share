@@ -1,12 +1,12 @@
 {{#each this}}
-    <article>
+    <article class="file">
         <header>
             <h1>{{from}} -&gt; {{to}}</h1>
         </header>
-        <main class="content">
+        <main>
             <ul class="chunks">
                 {{#each this.chunks}}  
-                    <li>
+                    <li class="chunk">
                         <code>
                             {{#each this.changes}}
                                 <span class="row {{type}}">

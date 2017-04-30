@@ -6,115 +6,174 @@ ul{
 
 
 body{
-    margin: 2em;
+    margin: 0;
+    background:#ddd;
 
-    >h1{
-        color: darkorange
-    }
+    .container{
+        margin: 0 auto;
+        max-width: 960px;
+        padding: 2em;
+        background: white;
 
-    input#url{
-        box-sizing:border-box;
-        width:100%;
-        font-size: 1em;
-        line-height: 1.5em;
-        padding: 6px 0 6px 6px;
-        border-radius : 4px;
-        border : solid 1px #aaa;
-        outline:0;
-        margin: 0.3em 0;
-        &+.desc{
-            font-size: .8em;
+        >h1{
+            color: rgba(255, 0, 0, 0.24);
+            font-size: 3.5em;
+            font-family: monospace;
+            text-shadow: 4px 4px 0px rgba(0, 255, 0, 0.56);
         }
-        &.valid{
-            border-color : #080;
-            &+.desc:after{
-                content:'Good ✔';
+
+        input#url{
+            box-sizing: border-box;
+            width: 100%;
+            font-size: 1em;
+            line-height: 1.1em;
+            padding: 6px 0 6px 6px;
+            border: 0 solid #aaa;
+            border-bottom-width: 2px;
+            outline: 0;
+            margin: 0.3em 0;
+            &+.desc{
+                font-size: .8em;
+                text-align: right;
+            }
+            &.valid{
+                border-color : #080;
                 color : #080;
-            }
-        }
-        &.invalid{
-            border-color : #b44;
-            &+.desc:after{
-                content:'invalid commit URL';
-                color : #b44;
-            }
-        }
-        &:focus{
-            box-shadow: 0 0 25px -13px inset;
-        }
-    }
-
-    #content{
-        article{
-            margin:2em 0;
-            border-radius:3px;
-            overflow: hidden;
-            border: solid 1px #bbb;
-            header{
-                background:#f8f8f8;
-                padding:.5em;
-                border-bottom: solid 1px #eee;
-                h1{
-                    font-size: .8em;
-                    margin:0;
+                &+.desc:after{
+                    content:'✔';
+                    color : #080;
                 }
             }
-            .content{
-                ul{
-                    li{
-                        overflow-x:auto;
-                        code{
-                            display:table;
-                            background: white;
-                            min-width: 100%;
-                            line-height: 1.4em;
-                            .row{
-                                .cell {
-                                    display: table-cell;
-                                    white-space: pre;
-                                    &.number:before,
-                                    &.number:after{
-                                        content:' ';
-                                        display: inline-block;
-                                        width:2em;
-                                        color:#fafafa;
-                                        //text-shadow: 0 0 40px rgba(0,0,0,0.5);
-                                        text-align: right;
-                                        padding: 0 .25em;
-                                        background:rgba(0,0,0,0.3);
-                                        border-right:solid 1px rgba(0,0,0,0.1);
-                                    }
-                                    &.line {
-                                        padding : 0 0 0 1em;
-                                        color:#555;
-                                    }
+            &.invalid{
+                border-color : #b44;
+                color : #b44;
+                &+.desc:after{
+                    content:'invalid commit URL';
+                    color : #b44;
+                }
+            }
+        }
+
+        #content{
+            margin-top: 1em;
+
+            article.file{
+                margin: 2em 0;
+                overflow: hidden;
+                background:#fff;
+
+                >header{
+                    margin:0;
+                    h1{
+                        padding: .5em .5em 0;
+                        font-size: .9em;
+                        margin: 0 0 0.5em;
+                        line-height: 1.6em;
+                        font-weight: bold;
+                        border-bottom: dashed 2px #ccc;
+                        display: inline-block;
+                    }
+                }
+
+                >main{
+                    ul{
+                        li.chunk{
+                            margin: 0 0 -1px;
+                            overflow-x:auto;
+                            code{
+                                display:table;
+                                background: #f6f6f6;
+                                min-width: 100%;
+                                line-height: 1.4em;
+                                position: relative;
+
+                                &:before{
+                                    position: absolute;
+                                    top: 0;
+                                    width:100%;
+                                    content:'';
+                                    display: block;
+                                    height: 1.5em;
+                                    background:
+                                    linear-gradient(-30deg, rgba(0,0,0,0) 0, rgba(0,0,0,0) 50%, #fff 50%, #fff 100%),
+                                    linear-gradient(30deg, rgba(0,0,0,0) 0, rgba(0,0,0,0) 50%, #fff 50%, #fff 100%);
+                                    background-size: 2em 1.5em;
                                 }
-                                display:table-row;
-                                &.normal{
-                                    .number{
-                                        &:before{
-                                            content:attr(data-line-number1);
+                                &:after{
+                                    position: absolute;
+                                    bottom: 0;
+                                    width: 100%;
+                                    content:'';
+                                    display: block;
+                                    background:#ddd;
+                                    height: 1.5em;
+                                    background:
+                                    linear-gradient(-30deg, #fff 0, #fff 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 100%),
+                                    linear-gradient(30deg, #fff 0, #fff 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0) 100%);
+                                    background-size: 2em 1.5em;
+                                    background-position: 1em 0;
+                                }
+
+                                .row{
+                                    display:table-row;
+                                    .cell {
+                                        display: table-cell;
+                                        white-space: pre;
+                                        &.number{
+                                            width: 2em;
+                                            &:before,
+                                            &:after{
+                                                content:' ';
+                                                display: inline-block;
+                                                width:2em;
+                                                color:#fafafa;
+                                                text-align: right;
+                                                padding: 0 .25em;
+                                                background:rgba(0,0,0,0.3);
+                                                border-right:solid 1px rgba(0,0,0,0.1);
+                                            }
                                         }
-                                        &:after{
-                                            content:attr(data-line-number2);
+                                        &.line {
+                                            padding : 0 0 0 1em;
+                                            color:#555;
                                         }
                                     }
-                                }
-                                &.add{
-                                    background: #e3ffe3;
-                                    .number{
-                                        &:after{
-                                            color: #aea;
-                                            content:attr(data-line-number);
+                                    &:first-child .number{
+                                        &:before, &:after {
+                                            padding-top: 2.3em;
                                         }
                                     }
-                                }
-                                &.del{
-                                    background: #ffe3e3;
-                                    .number{
-                                        &:before{
-                                            color: #eaa;
-                                            content:attr(data-line-number);
+                                    &:last-child .number{
+                                        &:before, &:after {
+                                            padding-bottom: 2.3em;
+                                        }
+                                    }
+                                    &.normal{
+                                        .number{
+                                            &:before{
+                                                content:attr(data-line-number1);
+                                            }
+                                            &:after{
+                                                content:attr(data-line-number2);
+                                            }
+                                        }
+                                    }
+                                    &.add{
+                                        background: #e3ffe3;
+                                        .number{
+                                            &:after{
+                                                color: #aea;
+                                                content:attr(data-line-number);
+                                            }
+                                        }
+                                    }
+                                    &.del{
+                                        background: #ffe3e3;
+                                        .number{
+                                            &:before{
+                                                color: #fdd;
+                                                content:attr(data-line-number);
+                                            }
                                         }
                                     }
                                 }
