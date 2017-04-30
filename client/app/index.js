@@ -38,9 +38,7 @@ function setInputValidity(eInput, isValid){
 function mapLines(files, mapperFunc) {
     return files.map(file => Object.assign(file, {
         chunks : file.chunks.map(chunk => Object.assign(chunk, {
-            changes : chunk.changes.map(change => Object.assign(change, {
-                content : mapperFunc(change.content)
-            }))
+            changes : chunk.changes.map(mapperFunc)
         }))
     }));
 }
@@ -52,7 +50,12 @@ function changeUrl(inputElement){
     handleUrlChange(() => 
         loadPageViaProxyServer(url, config.serverRoot+"/load")
             .then(parse)
-            .then(files => mapLines(files, line => line.slice(1)))
+            .then(files => mapLines(files, (change, index) =>
+                Object.assign(change, {
+                    content : change.content.slice(1),
+                    lineNumber : index + 1
+                })
+            ))
             .then(fileTemplate)
             .then(html => eContentDiv.innerHTML = html)
             .catch(err => console.error(err)));

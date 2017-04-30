@@ -8,8 +8,10 @@
                 {{#each this.chunks}}  
                     <li>
                         <code>
-                            {{#each this.changes}}  
-                                <span class="{{type}}">{{content}}</span>
+                            {{#each this.changes}}
+                                <span class="row {{type}}">
+                                    <span class="cell" data-line-number="{{lineNumber}}">{{content}}</span>
+                                </span>
                             {{/each}}
                         </code>
                     </li>

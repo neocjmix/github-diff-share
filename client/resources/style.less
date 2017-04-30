@@ -25,15 +25,15 @@ body{
         &+.desc{
             font-size: .8em;
         }
-        &.valid{ 
+        &.valid{
             border-color : #080;
             &+.desc:after{
                 content:'Good ✔';
                 color : #080;
             }
         }
-        &.invalid{ 
-            border-color : #b44; 
+        &.invalid{
+            border-color : #b44;
             &+.desc:after{
                 content:'invalid commit URL';
                 color : #b44;
@@ -46,30 +46,30 @@ body{
 
     #content{
         article{
-            background:#f4f4f4;
             margin:2em 0;
-            border-radius:10px;
+            border-radius:3px;
             overflow: hidden;
-            
+            border: solid 1px #bbb;
             header{
+                background:#f8f8f8;
                 padding:.5em;
-                background:#fafafa;
+                border-bottom: solid 1px #eee;
                 h1{
                     font-size: .8em;
                     margin:0;
                 }
             }
             .content{
-                padding:.5em;
                 ul{
                     li{
+                        overflow-x:auto;
                         code{
-                            display:block;
-                            padding:.5em;
+                            display:table;
                             background: white;
-                            white-space: pre;
-                            span{
-                                display:block;
+                            min-width: 100%;
+                            line-height: 1.4em;
+                            .row{
+                                display:table-row;
                                 &.normal{
 
                                 }
@@ -78,6 +78,20 @@ body{
                                 }
                                 &.del{
                                     background: #ffe3e3
+                                }
+                                .cell {
+                                    display: table-cell;
+                                    white-space: pre;
+                                    &:before{
+                                        display: inline-block;
+                                        content:attr(data-line-number);
+                                        width:2em;
+                                        color:#fafafa;
+                                        text-align: right;
+                                        padding: 0 .5em;
+                                        margin: 0 1em 0 0;
+                                        background:rgba(0,0,0,0.1);
+                                    }
                                 }
                             }
                         }
