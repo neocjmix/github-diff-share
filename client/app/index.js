@@ -37,9 +37,12 @@ function setInputValidity(eInput, isValid){
 
 function mapLines(files, mapperFunc) {
     return files.map(file => Object.assign(file, {
-        chunks : file.chunks.map(chunk => Object.assign(chunk, {
-            changes : chunk.changes.map(mapperFunc)
-        }))
+        chunks : file.chunks.map(chunk => {
+            console.log(chunk);
+            return Object.assign(chunk, {
+                changes : chunk.changes.map(mapperFunc)
+            })
+        })
     }));
 }
 
@@ -53,8 +56,7 @@ function changeUrl(inputElement){
             .then(parse)
             .then(files => mapLines(files, (change, index) =>
                     Object.assign(change, {
-                        content: change.content.slice(1),
-                        lineNumber: index + 1
+                        content: change.content.slice(1)
                     })
             ))
             .then(fileTemplate)
