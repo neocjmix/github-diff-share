@@ -52,14 +52,15 @@ function changeUrl(inputElement){
         loadPageViaProxyServer(url, config.serverRoot + "/load")
             .then(parse)
             .then(files => mapLines(files, (change, index) =>
-                Object.assign(change, {
-                    content : change.content.slice(1),
-                    lineNumber : index + 1
-                })
+                    Object.assign(change, {
+                        content: change.content.slice(1),
+                        lineNumber: index + 1
+                    })
             ))
             .then(fileTemplate)
             .then(html => eContentDiv.innerHTML = html)
-            .catch(err => console.error(err)));
+            .catch(err => console.error(err))
+    });
 }
 
 function loadPageViaProxyServer(url, proxyUrl){
