@@ -2,9 +2,9 @@
   "name": "web-app-boilerplate",
   "version": "1.0.0",
   "scripts": {
-    "client": "cd client && npm run development",
-    "server": "cd server && npm run development",
-    "development": "NODE_ENV=development concurrent \"npm run client\" \"npm run server\""
+    "clientDev": "cd client && npm run development",
+    "serverDev": "cd server && npm run development",
+    "development": "NODE_ENV=development concurrent \"npm run clientDev\" \"npm run serverDev\""
   },
   "devDependencies": {
     "concurrently": "^1.0.0",
