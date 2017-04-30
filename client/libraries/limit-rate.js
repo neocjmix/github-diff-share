@@ -1,4 +1,4 @@
-module.exports = function withDelay(interval) {
+module.exports = function limitRate(interval) {
     let _index;
     let baseInterval = interval;
     

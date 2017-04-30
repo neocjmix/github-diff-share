@@ -5,14 +5,14 @@ import 'resources/style.less';
 import 'resources/index.html';
 import config from 'config';
 import parse from 'parse-diff';
-import withDelay from 'libraries/with-delay';
+import limitRate from 'libraries/limit-rate';
 import props from 'resources/props';
 import fileTemplate from 'resources/file.hbs';
 
 
 const eUrlInput = document.getElementById('url');
 const eContentDiv = document.getElementById('content');
-const handleUrlChange = withDelay(500);
+const twicePerSecond = limitRate(500);
 
 function isValidGithubCommitDiffUrl(url){
     return !!url.match(/^https:\/\/github.com\/.+\/commit\/.+.diff$/);
@@ -47,7 +47,7 @@ function changeUrl(inputElement){
     const url = inputElement.value.replace(/(.diff)?$/, ".diff");
     if(!setInputValidity(inputElement, isValidGithubCommitDiffUrl(url))) return;
     
-    handleUrlChange(() => 
+    twicePerSecond(() =>
         loadPageViaProxyServer(url, config.serverRoot+"/load")
             .then(parse)
             .then(files => mapLines(files, (change, index) =>
