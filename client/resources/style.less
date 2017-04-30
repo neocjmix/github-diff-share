@@ -157,6 +157,11 @@ body{
                                                 content:attr(data-line-number2);
                                             }
                                         }
+                                        .line{
+                                            &:before{
+                                                content: ' ';
+                                            }
+                                        }
                                     }
                                     &.add{
                                         background: #e3ffe3;
@@ -166,6 +171,12 @@ body{
                                                 content:attr(data-line-number);
                                             }
                                         }
+                                        .line{
+                                            &:before{
+                                                content: '+';
+                                                color: #0d0;
+                                            }
+                                        }
                                     }
                                     &.del{
                                         background: #ffe3e3;
@@ -173,6 +184,12 @@ body{
                                             &:before{
                                                 color: #fdd;
                                                 content:attr(data-line-number);
+                                            }
+                                        }
+                                        .line{
+                                            &:before{
+                                                content: '-';
+                                                color: #d00;
                                             }
                                         }
                                     }
