@@ -80,6 +80,27 @@ body{
                         li.chunk{
                             margin: 0 0 -1px;
                             overflow-x:auto;
+                            position: relative;
+
+                            .ui{
+                                position: absolute;
+                                top: 1em;
+                                right: 0;
+                                padding: .3em;
+                                z-index: 1;
+
+                                button{
+                                    font-size: 1.2em;
+                                    border: 0;
+                                    border-radius: 3px;
+                                    background: #ddd;
+                                    line-height: .6em;
+                                    vertical-align: middle;
+                                    color: #777;
+                                    outline: 0;
+                                }
+                            }
+
                             code{
                                 display:table;
                                 background: #f6f6f6;
@@ -140,14 +161,15 @@ body{
                                     }
                                     &:first-child .number{
                                         &:before, &:after {
-                                            padding-top: 2.3em;
+                                            padding-top: 1.4em;
                                         }
                                     }
                                     &:last-child .number{
                                         &:before, &:after {
-                                            padding-bottom: 2.3em;
+                                            padding-bottom: 1.4em;
                                         }
                                     }
+
                                     &.normal{
                                         .number{
                                             &:before{
@@ -157,40 +179,64 @@ body{
                                                 content:attr(data-line-number2);
                                             }
                                         }
-                                        .line{
-                                            &:before{
-                                                content: ' ';
-                                            }
+                                        .line:before {
+                                            content: ' ';
                                         }
                                     }
                                     &.add{
                                         background: #e3ffe3;
-                                        .number{
-                                            &:after{
-                                                color: #aea;
-                                                content:attr(data-line-number);
-                                            }
+                                        .number:after{
+                                            color: #aea;
+                                            content:attr(data-line-number);
                                         }
-                                        .line{
-                                            &:before{
-                                                content: '+';
-                                                color: #0d0;
-                                            }
+                                        .line:before{
+                                            content: '+';
+                                            color: #0d0;
                                         }
                                     }
                                     &.del{
                                         background: #ffe3e3;
-                                        .number{
-                                            &:before{
-                                                color: #fdd;
-                                                content:attr(data-line-number);
-                                            }
+                                        .number:before{
+                                            color: #fdd;
+                                            content:attr(data-line-number);
                                         }
-                                        .line{
-                                            &:before{
-                                                content: '-';
-                                                color: #d00;
-                                            }
+                                        .line:before{
+                                            content: '-';
+                                            color: #d00;
+                                        }
+                                    }
+                                }
+                            }
+
+                            &[data-status=both]{
+                                .ui button[data-target-status=both]{
+                                    background : white;
+                                }
+                            }
+
+                            &[data-status=before]{
+                                .ui button[data-target-status=before]{
+                                    background : white;
+                                }
+
+                                code {
+                                    .row{
+                                        &.add, .cell.number:after {
+                                            display:none;
+                                        }
+                                    }
+                                }
+                            }
+
+                            &[data-status=after]{
+                                .ui button[data-target-status=after]{
+                                    background : white;
+                                }
+
+                                code {
+                                    .row{
+                                        &.del, .cell.number:before {
+                                            display:none;
                                         }
                                     }
                                 }

@@ -1,12 +1,17 @@
 {{#each this}}
     <article class="file">
         <header>
-            <h1>{{from}} -&gt; {{to}}</h1>
+            <h1>{{from}} &rarr; {{to}}</h1>
         </header>
         <main>
             <ul class="chunks">
                 {{#each this.chunks}}  
                     <li class="chunk">
+                        <div class="ui">
+                            <button data-target-status="before">&larr;</button>
+                            <button data-target-status="after">&rarr;</button>
+                            <button data-target-status="both">&harr;</button>
+                        </div>
                         <code>
                             {{#each this.changes}}
                                 <div class="row {{type}}">

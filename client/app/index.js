@@ -51,7 +51,7 @@ function setInputValidity(eInput, isValid){
     return false;
 }
 
-function mapLines(files) {
+function formatChunks(files) {
     return files.map(file => Object.assign({}, file, {
         chunks : file.chunks.map(chunk => {
             const code = chunk.changes
@@ -69,6 +69,19 @@ function mapLines(files) {
     }));
 }
 
+function setChunkUi(eChunk) {
+    eChunk.addEventListener('click', e =>
+        eChunk.dataset.status = e.target.matches('.ui button')
+            ? e.target.dataset.targetStatus
+            : eChunk.dataset.status);
+}
+
+function fireClickEvent(element){
+    var event = document.createEvent('HTMLEvents');
+    event.initEvent('click', true, false);
+    element.dispatchEvent(event)
+}
+
 function changeUrl(inputElement){
     const url = inputElement.value.replace(/(.diff)?$/, ".diff");
     if(!setInputValidity(inputElement, isValidGithubCommitDiffUrl(url))) return;
@@ -77,10 +90,13 @@ function changeUrl(inputElement){
         history.replaceState({},"","?url="+url);
         loadPageViaProxyServer(url, config.serverRoot + "/load")
             .then(parse)
-            .then(files => mapLines(files))
+            .then(formatChunks)
             .then(fileTemplate)
-            .then(html => eContentDiv.innerHTML = html)
-            .catch(err => console.error(err))
+            .then(html => {
+                eContentDiv.innerHTML = html;
+                [].slice.apply(eContentDiv.querySelectorAll('.chunk')).forEach(setChunkUi);
+                [].slice.apply(eContentDiv.querySelectorAll('.chunk .ui button[data-target-status=both]')).forEach(fireClickEvent);
+            })
     });
 }
 
@@ -94,10 +110,10 @@ function loadPageViaProxyServer(url, proxyUrl){
         })
 }
 
-eUrlInput.addEventListener('input', e => changeUrl(e.target));
 if(location.search.indexOf('url=') >= 0){
     eUrlInput.value = location.search.replace('?url=','');
     changeUrl(eUrlInput);
 }
 
-// eUrlInput.addEventListener('paste', changeUrl);
+eUrlInput.addEventListener('input', e => changeUrl(e.target));
+
