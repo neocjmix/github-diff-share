@@ -9,10 +9,10 @@
                     <li class="chunk">
                         <code>
                             {{#each this.changes}}
-                                <span class="row {{type}}">
-                                    <span class="cell number" data-line-number="{{ln}}" data-line-number1="{{ln1}}" data-line-number2="{{ln2}}"></span>
-                                    <span class="cell line">{{content}}</span>
-                                </span>
+                                <div class="row {{type}}">
+                                    <div class="cell number" data-line-number="{{ln}}" data-line-number1="{{ln1}}" data-line-number2="{{ln2}}"></div>
+                                    <div class="cell line">{{{content}}}</div>
+                                </div>
                             {{/each}}
                         </code>
                     </li>

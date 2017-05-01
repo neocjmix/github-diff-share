@@ -1,3 +1,7 @@
 {
-    "userName" : "Frank"
+    "languages" : {
+        "javascript": ["js", "coffee", "json"],
+        "css": ["css", "less", "sass"],
+        "markup": ["html", "htm", "hbs", "ftl", "vm", "xml"]
+    }
 }

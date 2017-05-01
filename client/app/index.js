@@ -1,18 +1,34 @@
 'use strict';
 
-import 'babel-polyfill';
-import 'resources/style.less';
 import 'resources/index.html';
-import config from 'config';
+import 'resources/style.less';
+import 'prismjs/themes/prism-coy.css'
+
+import 'babel-polyfill';
+import Prism from 'prismjs'
 import parse from 'parse-diff';
+import config from 'config';
 import limitRate from 'libraries/limit-rate';
 import props from 'resources/props';
 import fileTemplate from 'resources/file.hbs';
 
 
+
 const eUrlInput = document.getElementById('url');
 const eContentDiv = document.getElementById('content');
 const twicePerSecond = limitRate(500);
+const selectLanguages = (languagesMap =>
+        extension => {
+            const matchingLanguages = Object.entries(languagesMap)
+                .filter(entry => entry[1].includes(extension))
+                .map(entry => entry[0]);
+
+            return Prism.languages[matchingLanguages.length > 0 ? matchingLanguages[0] : "clike"];
+        }
+)(props.languages);
+
+
+
 
 function isValidGithubCommitDiffUrl(url){
     return !!url.match(/^https:\/\/github.com\/.+\/commit\/.+.diff$/);
@@ -35,13 +51,20 @@ function setInputValidity(eInput, isValid){
     return false;
 }
 
-function mapLines(files, mapperFunc) {
-    return files.map(file => Object.assign(file, {
+function mapLines(files) {
+    return files.map(file => Object.assign({}, file, {
         chunks : file.chunks.map(chunk => {
-            console.log(chunk);
-            return Object.assign(chunk, {
-                changes : chunk.changes.map(mapperFunc)
-            })
+            const code = chunk.changes
+                .map(change => change.content.slice(1))
+                .reduce((line1, line2)=>line1 + '\n' + line2);
+
+            return Object.assign({}, chunk, {
+                changes : Prism.highlight(code, selectLanguages(file.to.match("(\\.)([^\\.]*$)")[2]))
+                    .split('\n')
+                    .map((line, index) => Object.assign({}, chunk.changes[index], {
+                        content: line
+                    }))
+            });
         })
     }));
 }
@@ -54,11 +77,7 @@ function changeUrl(inputElement){
         history.replaceState({},"","?url="+url);
         loadPageViaProxyServer(url, config.serverRoot + "/load")
             .then(parse)
-            .then(files => mapLines(files, (change, index) =>
-                    Object.assign(change, {
-                        content: change.content.slice(1)
-                    })
-            ))
+            .then(files => mapLines(files))
             .then(fileTemplate)
             .then(html => eContentDiv.innerHTML = html)
             .catch(err => console.error(err))
