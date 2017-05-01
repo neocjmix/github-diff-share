@@ -70,10 +70,8 @@ function formatChunks(files) {
 }
 
 function setChunkUi(eChunk) {
-    eChunk.addEventListener('click', e =>
-        eChunk.dataset.status = e.target.matches('.ui button')
-            ? e.target.dataset.targetStatus
-            : eChunk.dataset.status);
+    eChunk.addEventListener('change', e =>
+        eChunk.dataset.status = eChunk.querySelector('.ui input:checked').value);
 }
 
 function fireClickEvent(element){
@@ -95,7 +93,6 @@ function changeUrl(inputElement){
             .then(html => {
                 eContentDiv.innerHTML = html;
                 [].slice.apply(eContentDiv.querySelectorAll('.chunk')).forEach(setChunkUi);
-                [].slice.apply(eContentDiv.querySelectorAll('.chunk .ui button[data-target-status=both]')).forEach(fireClickEvent);
             })
     });
 }

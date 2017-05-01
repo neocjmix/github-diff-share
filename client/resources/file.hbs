@@ -8,9 +8,9 @@
                 {{#each this.chunks}}  
                     <li class="chunk">
                         <div class="ui">
-                            <button data-target-status="before">&larr;</button>
-                            <button data-target-status="after">&rarr;</button>
-                            <button data-target-status="both">&harr;</button>
+                            <input type="radio" name="mode{{@index}}" aria-label="&larr;" value="before">
+                            <input type="radio" name="mode{{@index}}" aria-label="&rarr;" value="after">
+                            <input type="radio" name="mode{{@index}}" aria-label="&harr;" value="both" checked>
                         </div>
                         <code>
                             {{#each this.changes}}

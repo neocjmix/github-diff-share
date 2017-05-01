@@ -84,20 +84,43 @@ body{
 
                             .ui{
                                 position: absolute;
-                                top: 1em;
-                                right: 0;
-                                padding: .3em;
+                                top: 1.5em;
+                                right: .5em;
                                 z-index: 1;
+                                background: #ddd;
+                                border-radius: 9999px;
+                                line-height: 1.2em;
+                                box-shadow: 2px 2px 2px -1px #bbb inset;
+                                padding: 2px 0;
+                                overflow: hidden;
 
-                                button{
-                                    font-size: 1.2em;
-                                    border: 0;
-                                    border-radius: 3px;
-                                    background: #ddd;
-                                    line-height: .6em;
+                                input[type=radio]{
+                                    position: relative;
+                                    width: 1em;
+                                    margin: 0 .7em;
                                     vertical-align: middle;
-                                    color: #777;
-                                    outline: 0;
+
+                                    &:after{
+                                        content: attr(aria-label);
+                                        display:block;
+                                        position: absolute;
+                                        top: 50%;
+                                        left: 50%;
+                                        margin: -.5em 0 0 -.5em;
+                                        border-radius: 50%;
+                                        width: 1em;
+                                        height: 1em;
+                                        line-height: 1em;
+                                        vertical-align: middle;
+                                        text-align: center;
+                                        font-size: 1.7em;
+                                        border: 0;
+                                        color: #777;
+                                        background: #ddd;
+                                    }
+                                    &:checked:after{
+                                        background: #fff;
+                                    }
                                 }
                             }
 
@@ -208,37 +231,17 @@ body{
                                 }
                             }
 
-                            &[data-status=both]{
-                                .ui button[data-target-status=both]{
-                                    background : white;
+                            &[data-status=before] code .row{
+                                &.add,
+                                .cell.number:after {
+                                    display:none;
                                 }
                             }
 
-                            &[data-status=before]{
-                                .ui button[data-target-status=before]{
-                                    background : white;
-                                }
-
-                                code {
-                                    .row{
-                                        &.add, .cell.number:after {
-                                            display:none;
-                                        }
-                                    }
-                                }
-                            }
-
-                            &[data-status=after]{
-                                .ui button[data-target-status=after]{
-                                    background : white;
-                                }
-
-                                code {
-                                    .row{
-                                        &.del, .cell.number:before {
-                                            display:none;
-                                        }
-                                    }
+                            &[data-status=after] code .row{
+                                &.del,
+                                .cell.number:before {
+                                    display:none;
                                 }
                             }
                         }
