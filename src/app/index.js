@@ -7,7 +7,6 @@ import 'prismjs/themes/prism-coy.css'
 import 'babel-polyfill';
 import Prism from 'prismjs'
 import parse from 'parse-diff';
-import config from 'config';
 import limitRate from 'libraries/limit-rate';
 import props from 'resources/props';
 import fileTemplate from 'resources/file.hbs';
