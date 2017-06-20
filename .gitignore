@@ -4,5 +4,4 @@
 .server_rev
 *.iml
 *.log
-build
 node_modules/
