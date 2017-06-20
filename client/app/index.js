@@ -86,7 +86,7 @@ function changeUrl(inputElement){
     
     twicePerSecond(() => {
         history.replaceState({},"","?url="+url);
-        loadPageViaProxyServer(url, config.serverRoot + "/load")
+        loadPageViaProxyServer(url, "https://crossorigin.me")
             .then(parse)
             .then(formatChunks)
             .then(fileTemplate)
@@ -98,7 +98,7 @@ function changeUrl(inputElement){
 }
 
 function loadPageViaProxyServer(url, proxyUrl){
-    return fetch(proxyUrl + '?url=' + url)
+    return fetch(proxyUrl + '/' + url)
         .then(response=>{
             if (!response.ok) {
                throw Error(response.statusText);
