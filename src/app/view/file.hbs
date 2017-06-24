@@ -1,7 +1,7 @@
 {{#each this}}
     <article class="file">
         <header>
-            <h1>{{from}} &rarr; {{to}}</h1>
+            <h1>{{from}}{{#if filePathChanged}}&rarr; {{to}}{{/if}}</h1>
         </header>
         <main>
             <ul class="chunks">

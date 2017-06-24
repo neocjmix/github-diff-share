@@ -7,9 +7,9 @@ import 'babel-polyfill';
 import Prism from 'prismjs'
 import parse from 'parse-diff';
 import limitRate from 'libraries/limit-rate';
-import selectLanguages from 'app/select-language';
-import mainView from 'app/main-view';
-import fileListView from 'app/file-list-view';
+import selectLanguages from './select-language';
+import fileView from './view/file';
+import fileListView from './view/file-list';
 
 const eUrlInput = document.getElementById('url');
 const eContentDiv = document.getElementById('content');
@@ -40,6 +40,7 @@ function setInputClassByValidity(eInput, isValid){
 
 function formatChunks(files) {
     return files.map(file => Object.assign({}, file, {
+        filePathChanged : file.from !== file.to,
         chunks : file.chunks.map(chunk => {
             const code = chunk.changes
                 .map(change => change.content.slice(1))
@@ -67,7 +68,7 @@ function changeUrl(inputElement){
             .then(formatChunks)
             .then(data=>{
                 fileListView(eListDiv, data);
-                mainView(eContentDiv, data);
+                fileView(eContentDiv, data);
             })
     });
 }

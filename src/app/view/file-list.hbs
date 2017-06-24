@@ -1,7 +1,7 @@
 <ul>
     {{#each this}}
         <li class="file">
-            {{from}} &rarr; {{to}}
+            {{from}}{{#if filePathChanged}}&rarr; {{to}}{{/if}}
         </li>
     {{/each}}
 </ul>

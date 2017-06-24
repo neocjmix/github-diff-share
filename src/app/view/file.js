@@ -1,4 +1,4 @@
-import fileTemplate from 'resources/file.hbs';
+import fileTemplate from './file.hbs';
 
 module.exports = function(eContainer, data){
     eContainer.innerHTML = fileTemplate(data);
