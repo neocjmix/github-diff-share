@@ -3,37 +3,23 @@
 import 'resources/index.html';
 import 'resources/style.less';
 import 'prismjs/themes/prism-coy.css'
-
 import 'babel-polyfill';
 import Prism from 'prismjs'
 import parse from 'parse-diff';
 import limitRate from 'libraries/limit-rate';
-import props from 'resources/props';
 import fileTemplate from 'resources/file.hbs';
-
-
+import selectLanguages from 'app/select-language';
 
 const eUrlInput = document.getElementById('url');
 const eContentDiv = document.getElementById('content');
 const twicePerSecond = limitRate(500);
-const selectLanguages = (languagesMap =>
-        extension => {
-            const matchingLanguages = Object.entries(languagesMap)
-                .filter(entry => entry[1].includes(extension))
-                .map(entry => entry[0]);
-
-            return Prism.languages[matchingLanguages.length > 0 ? matchingLanguages[0] : "clike"];
-        }
-)(props.languages);
-
-
 
 
 function isValidGithubCommitDiffUrl(url){
     return !!url.match(/^https:\/\/github.com\/.+\/commit\/.+.diff$/);
 }
 
-function setInputValidity(eInput, isValid){
+function setInputClassByValidity(eInput, isValid){
     if(isValid){
         eInput.className = eInput.className.replace(/ (in)?valid( |$)/, "");
         eInput.className += " valid";
@@ -73,16 +59,10 @@ function setChunkUi(eChunk) {
         eChunk.dataset.status = eChunk.querySelector('.ui input:checked').value);
 }
 
-function fireClickEvent(element){
-    var event = document.createEvent('HTMLEvents');
-    event.initEvent('click', true, false);
-    element.dispatchEvent(event)
-}
-
 function changeUrl(inputElement){
     const url = inputElement.value.replace(/(.diff)?$/, ".diff");
-    if(!setInputValidity(inputElement, isValidGithubCommitDiffUrl(url))) return;
-    
+    if(!setInputClassByValidity(inputElement, isValidGithubCommitDiffUrl(url))) return;
+
     twicePerSecond(() => {
         history.replaceState({},"","?url="+url);
         loadPageViaProxyServer(url, "https://crossorigin.me")
@@ -91,7 +71,8 @@ function changeUrl(inputElement){
             .then(fileTemplate)
             .then(html => {
                 eContentDiv.innerHTML = html;
-                [].slice.apply(eContentDiv.querySelectorAll('.chunk')).forEach(setChunkUi);
+                [].slice.apply(eContentDiv.querySelectorAll('.chunk'))
+                    .forEach(setChunkUi);
             })
     });
 }
