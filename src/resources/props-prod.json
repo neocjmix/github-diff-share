@@ -1,0 +1,8 @@
+{
+    "proxyUrl" : "https://crossorigin.me",
+    "languages" : {
+        "javascript": ["js", "coffee", "json"],
+        "css": ["css", "less", "sass"],
+        "markup": ["html", "htm", "hbs", "ftl", "vm", "xml"]
+    }
+}

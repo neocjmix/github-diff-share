@@ -7,15 +7,17 @@ import 'babel-polyfill';
 import Prism from 'prismjs'
 import parse from 'parse-diff';
 import limitRate from 'libraries/limit-rate';
+import props from 'props';
 import selectLanguages from './select-language';
 import fileView from './view/file';
 import fileListView from './view/file-list';
+
 
 const eUrlInput = document.getElementById('url');
 const eContentDiv = document.getElementById('content');
 const eListDiv = document.getElementById('list');
 const twicePerSecond = limitRate(500);
-
+const proxyUrl = props.proxyUrl;
 
 function isValidGithubCommitDiffUrl(url){
     return !!url.match(/^https:\/\/github.com\/.+\/commit\/.+.diff$/);
@@ -63,7 +65,7 @@ function changeUrl(inputElement){
 
     twicePerSecond(() => {
         history.replaceState({},"","?url="+url);
-        loadPageViaProxyServer(url, "https://crossorigin.me")
+        loadPageViaProxyServer(url, proxyUrl)
             .then(parse)
             .then(formatChunks)
             .then(data=>{

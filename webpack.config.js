@@ -1,5 +1,6 @@
 var path = require('path');
 var fs = require('fs');
+var isProd = (process.env.NODE_ENV === 'production');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpackConfig = {
     entry:[
@@ -17,7 +18,10 @@ var webpackConfig = {
         alias: {
             app: path.resolve(__dirname, 'src/app'),
             resources: path.resolve(__dirname, 'src/resources'),
-            libraries: path.resolve(__dirname, 'src/libraries')
+            libraries: path.resolve(__dirname, 'src/libraries'),
+            props: isProd
+                ? path.resolve(__dirname, 'src/resources/props-prod')
+                : path.resolve(__dirname, 'src/resources/props-dev')
         },
         extensions: [".js", ".json"]
     },

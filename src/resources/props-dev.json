@@ -1,4 +1,5 @@
 {
+    "proxyUrl" : "https://localhost:4000",
     "languages" : {
         "javascript": ["js", "coffee", "json"],
         "css": ["css", "less", "sass"],

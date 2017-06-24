@@ -1,6 +1,6 @@
 'use strict';
 
-import props from 'resources/props';
+import props from 'props';
 
 module.exports = extension => {
     const matchingLanguages = Object.entries(props.languages)

@@ -2,6 +2,7 @@
   "name": "webpack-babel-boilerplate",
   "version": "1.0.0",
   "scripts": {
+    "build": "NODE_ENV=production webpack",
     "development": "NODE_ENV=development webpack-dev-server --inline --hot",
     "test": "mocha --watch --harmony-proxies --compilers js:babel-core/register \"src/app/**/*.test.js\""
   },
