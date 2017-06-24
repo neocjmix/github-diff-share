@@ -5,12 +5,12 @@
         </header>
         <main>
             <ul class="chunks">
-                {{#each this.chunks}}  
+                {{#each this.chunks}}
                     <li class="chunk">
                         <div class="ui">
-                            <input type="radio" name="mode{{@index}}" aria-label="&larr;" value="before">
-                            <input type="radio" name="mode{{@index}}" aria-label="&rarr;" value="after">
-                            <input type="radio" name="mode{{@index}}" aria-label="&harr;" value="both" checked>
+                            <input type="radio" name="mode{{@../index}}{{@index}}" aria-label="&larr;" value="before">
+                            <input type="radio" name="mode{{@../index}}{{@index}}" aria-label="&rarr;" value="after">
+                            <input type="radio" name="mode{{@../index}}{{@index}}" aria-label="&harr;" value="both" checked>
                         </div>
                         <code>
                             {{#each this.changes}}

@@ -7,11 +7,13 @@ import 'babel-polyfill';
 import Prism from 'prismjs'
 import parse from 'parse-diff';
 import limitRate from 'libraries/limit-rate';
-import fileTemplate from 'resources/file.hbs';
 import selectLanguages from 'app/select-language';
+import mainView from 'app/main-view';
+import fileListView from 'app/file-list-view';
 
 const eUrlInput = document.getElementById('url');
 const eContentDiv = document.getElementById('content');
+const eListDiv = document.getElementById('list');
 const twicePerSecond = limitRate(500);
 
 
@@ -54,11 +56,6 @@ function formatChunks(files) {
     }));
 }
 
-function setChunkUi(eChunk) {
-    eChunk.addEventListener('change', e =>
-        eChunk.dataset.status = eChunk.querySelector('.ui input:checked').value);
-}
-
 function changeUrl(inputElement){
     const url = inputElement.value.replace(/(.diff)?$/, ".diff");
     if(!setInputClassByValidity(inputElement, isValidGithubCommitDiffUrl(url))) return;
@@ -68,11 +65,9 @@ function changeUrl(inputElement){
         loadPageViaProxyServer(url, "https://crossorigin.me")
             .then(parse)
             .then(formatChunks)
-            .then(fileTemplate)
-            .then(html => {
-                eContentDiv.innerHTML = html;
-                [].slice.apply(eContentDiv.querySelectorAll('.chunk'))
-                    .forEach(setChunkUi);
+            .then(data=>{
+                fileListView(eListDiv, data);
+                mainView(eContentDiv, data);
             })
     });
 }
